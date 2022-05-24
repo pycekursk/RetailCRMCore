@@ -10,5 +10,6 @@
     public Address address { get; set; }
     public TimeInterval time { get; set; }
     public DeliveryService service { get; set; }
+    public object data { get; set; }
   }
 }

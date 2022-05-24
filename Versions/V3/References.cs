@@ -1,4 +1,6 @@
-﻿using RetailCRMCore.Helpers;
+﻿using Newtonsoft.Json;
+
+using RetailCRMCore.Helpers;
 using RetailCRMCore.Models;
 
 using System;
@@ -107,7 +109,7 @@ namespace RetailCRMCore.Versions.V3
       {
         PropertyNamingPolicy = new ArrayNamingProlicy<T>(),
         WriteIndented = true,
-        PropertyNameCaseInsensitive = true,
+        PropertyNameCaseInsensitive = true
       };
       options.Converters.Add(new JsonDateTimeConverter());
 
@@ -315,6 +317,18 @@ namespace RetailCRMCore.Versions.V3
       );
     }
 
+    public Response DeliveryTypesEdit(DeliveryType type)
+    {
+      return Request.MakeRequest(
+          $"/reference/delivery-types/{type.code}/edit",
+          Request.MethodPost,
+          new Dictionary<string, object>
+          {
+                    { "deliveryType", JsonConvert.SerializeObject(type) }
+          }
+      );
+    }
+
     /// <summary>
     /// Orders methods edit
     /// </summary>
@@ -415,6 +429,18 @@ namespace RetailCRMCore.Versions.V3
 
       return Request.MakeRequest(
           $"/reference/payment-types/{type["code"].ToString()}/edit",
+          Request.MethodPost,
+          new Dictionary<string, object>
+          {
+                    { "paymentType", Newtonsoft.Json.JsonConvert.SerializeObject(type) }
+          }
+      );
+    }
+
+    public Response PaymentTypesEdit(PaymentType type)
+    {
+      return Request.MakeRequest(
+          $"/reference/payment-types/{type.code}/edit",
           Request.MethodPost,
           new Dictionary<string, object>
           {

@@ -1,60 +1,102 @@
-﻿using System.ComponentModel;
+﻿using Newtonsoft.Json;
+
+using System.ComponentModel;
 
 namespace RetailCRMCore.Models
 {
   //public class Address
   //{
-  //  public int id { get; set; }
-  //  public string city { get; set; }
-  //  public string street { get; set; }
-  //  public string house { get; set; }
-  //  public string text { get; set; }
-  //  public string building { get; set; }
+  //  [JsonProperty("index")]
+  //  [DisplayName("ISO код страны")]
+  //  public string CountryIsoCode { get; set; }
+
+  //  public string Country { get; set; }
+  //  public string FederalDistrict { get; set; }
+  //  [DisplayName("Время доставки")]
+  //  public DateTime DeliveryTime { get; set; }
+
+  //  [JsonProperty("index")]
+  //  [DisplayName("Индекс")]
+  //  public string PostalCode { get; set; }
+  //  [DisplayName("Регион")]
+  //  public string Region { get; set; }
+
+  //  public string RegionWithType { get; set; }
+
+  //  [DisplayName("Идентификатор региона")]
+  //  public long RegionKladrId { get; set; }
+  //  public string RegionFiasId { get; set; }
+  //  public string RegionIsoCode { get; set; }
+
+  //  [DisplayName("Город")]
+  //  public string City { get; set; }
+  //  [DisplayName("Идентификатор города")]
+  //  public long CityKladrId { get; set; }
+  //  public string CityFiasId { get; set; }
+  //  public string CityIsoCode { get; set; }
+  //  [DisplayName("Тип населенного пункта")]
+  //  public string CityType { get; set; }
+  //  [DisplayName("Улица")]
+  //  public string Street { get; set; }
+
+  //  public string StreetFiasId { get; set; }
+  //  public long StreetKladrId { get; set; }
+
+
+  //  [DisplayName("Тип улицы")]
+  //  public string StreetType { get; set; }
+  //  [DisplayName("Дом")]
+  //  public string Building { get; set; }
+  //  [DisplayName("Строение")]
+  //  public string House { get; set; }
+  //  [DisplayName("Корпус")]
+  //  public string Housing { get; set; }
+  //  [DisplayName("Подъезд")]
+  //  public int? Block { get; set; }
+  //  [DisplayName("Номер квартиры/офиса")]
+  //  public string Flat { get; set; }
+  //  [DisplayName("Этаж")]
+  //  public int? Floor { get; set; }
+  //  [DisplayName("Метро")]
+  //  public string Metro { get; set; }
+
+  //  [JsonProperty("text")]
+  //  [DisplayName("Адрес в текстовом виде")]
+  //  public string Text { get; set; }
+  //  [DisplayName("Примечания к адресу")]
+  //  public string Notes { get; set; }
+  //  [DisplayName("Адрес пустой")]
+  //  public bool IsEmpty { get; set; }
+
+  //  public string GeoLat { get; set; }
+  //  public string GeoLon { get; set; }
+
+  //  public override string ToString()
+  //  {
+  //    return $"{RegionWithType}, {CityType} {City}, {StreetType} {Street} {Building}, {Flat}";
+  //  }
+
+  //  //TODO: дополнить оператором преобразования в location
   //}
+
 
   public class Address
   {
-    [DisplayName("ISO код страны")]
-    public string countryIso { get; set; }
-    [DisplayName("Время доставки")]
-    public DateTime deliveryTime { get; set; }
-    [DisplayName("Индекс")]
     public string index { get; set; }
-    [DisplayName("Регион")]
     public string region { get; set; }
-    [DisplayName("Идентификатор региона в Geohelper")]
     public int regionId { get; set; }
-    [DisplayName("Город")]
     public string city { get; set; }
-    [DisplayName("Идентификатор города в Geohelper")]
     public int cityId { get; set; }
-    [DisplayName("Тип населенного пункта")]
     public string cityType { get; set; }
-    [DisplayName("Улица")]
     public string street { get; set; }
-    [DisplayName("Идентификатор улицы в Geohelper")]
     public int streetId { get; set; }
-    [DisplayName("Тип улицы")]
     public string streetType { get; set; }
-    [DisplayName("Дом")]
     public string building { get; set; }
-    [DisplayName("Строение")]
-    public string house { get; set; }
-    [DisplayName("Корпус")]
-    public string housing { get; set; }
-    [DisplayName("Подъезд")]
-    public int? block { get; set; }
-    [DisplayName("Номер квартиры/офиса")]
     public string flat { get; set; }
-    [DisplayName("Этаж")]
-    public int? floor { get; set; }
-    [DisplayName("Метро")]
-    public string metro { get; set; }
-    [DisplayName("Адрес в текстовом виде")]
     public string text { get; set; }
-    [DisplayName("Примечания к адресу")]
-    public string notes { get; set; }
-    [DisplayName("Адрес пустой")]
-    public bool isEmpty { get; set; }
+    public int? block { get; set; }
+    public string? metro { get; set; }
+    public string countryIso { get; set; }
+    public int? floor { get; set; }
   }
 }

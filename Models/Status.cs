@@ -35,5 +35,6 @@
     /// </summary>
     public string groupCode { get; set; }
 
+    public string trackingStatusCode { get; set; }
   }
 }

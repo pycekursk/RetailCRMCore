@@ -113,7 +113,7 @@ namespace RetailCRMCore.Models
     /// <summary>
     /// Товары в заказе (в том числе и отмененные)
     /// </summary>
-    public OrderProduct[] orderProducts { get; set; }
+    //public OrderProduct[] orderProducts { get; set; }
     /// <summary>
     /// Товары в заказе (рекомендуется использовать данный метод для получения товаров)
     /// </summary>
@@ -145,55 +145,55 @@ namespace RetailCRMCore.Models
     /// <summary>
     /// Тип доставки
     /// </summary>
-    public DeliveryType deliveryType { get; set; } = new DeliveryType();
+    //public DeliveryType deliveryType { get; set; } = new DeliveryType();
     /// <summary>
     /// Служба доставки
     /// </summary>
-    public DeliveryService deliveryService { get; set; } = new DeliveryService();
+    //public DeliveryService deliveryService { get; set; } = new DeliveryService();
     /// <summary>
     /// Адрес доставки
     /// </summary>
-    public Address deliveryAddress { get; set; } = new Address();
+    //public Address deliveryAddress { get; set; } = new Address();
     /// <summary>
     /// Дата доставки
     /// </summary>
-    public DateTime deliveryDate { get; set; }
+    //public DateTime deliveryDate { get; set; }
     /// <summary>
     /// Время доставки
     /// </summary>
-    public string deliveryTime { get; set; }
+    //public string deliveryTime { get; set; }
     /// <summary>
     /// deprecated Время доставки "с"
     /// </summary>
-    public string deliveryTimeFrom { get; set; }
+    //public string deliveryTimeFrom { get; set; }
     /// <summary>
     /// deprecated Время доставки "до"
     /// </summary>
-    public string deliveryTimeTo { get; set; }
+    //public string deliveryTimeTo { get; set; }
     /// <summary>
     /// deprecated Время доставки в свободной форме
     /// </summary>
-    public string deliveryTimeCustom { get; set; }
+    //public string deliveryTimeCustom { get; set; }
     /// <summary>
     /// deprecated Строковое представление времени доставки
     /// </summary>
-    public string deliveryTimeString { get; set; }
+    //public string deliveryTimeString { get; set; }
     /// <summary>
     /// Стоимость доставки
     /// </summary>
-    public string deliveryCost { get; set; }
+    //public string deliveryCost { get; set; }
     /// <summary>
     /// Себестоимость доставки
     /// </summary>
-    public string deliveryNetCost { get; set; }
+    //public string deliveryNetCost { get; set; }
     /// <summary>
     /// Стоимость доставки задается вручную
     /// </summary>
-    public string deliveryCostIsManual { get; set; }
+    //public string deliveryCostIsManual { get; set; }
     /// <summary>
     /// Себестоимость доставки задается вручную
     /// </summary>
-    public string deliveryNetCostIsManual { get; set; }
+    //public string deliveryNetCostIsManual { get; set; }
     /// <summary>
     /// deprecated Номер отправления в интеграционной службе доставки. Используйте getIntegrationDeliveryData().trackNumber
     /// </summary>
@@ -265,7 +265,7 @@ namespace RetailCRMCore.Models
     /// <summary>
     /// Ставка НДС доставки
     /// </summary>
-    public string deliveryVatRate { get; set; }
+    //public string deliveryVatRate { get; set; }
     /// <summary>
     /// Общая сумма с учетом скидки
     /// </summary>
@@ -318,7 +318,8 @@ namespace RetailCRMCore.Models
     /// Платежи
     /// </summary>
 
-    public Payment[] payments { get; set; }
+    //TODO : не сериализуется сука...
+    public dynamic payments { get; set; }
 
     /// <summary>
     /// Данные интеграционной доставки

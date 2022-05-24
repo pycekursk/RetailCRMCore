@@ -41,11 +41,4 @@
 
     public IntegrationModule? integrationModule { get; set; }
   }
-
-  public class IntegrationModule
-  {
-    public bool active { get; set; }
-    public string? name { get; set; }
-    public string? logo { get; set; }
-  }
 }
