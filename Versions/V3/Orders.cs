@@ -1,290 +1,377 @@
-﻿using RetailCRMCore.Helpers;
+﻿using Newtonsoft.Json.Linq;
+
+using RetailCRMCore.Helpers;
 using RetailCRMCore.Models;
 
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace RetailCRMCore.Versions.V3
 {
-  public partial class Client
-  {
-    /// <summary>
-    /// Create order
-    /// </summary>
-    /// <param name="order"></param>
-    /// <param name="site"></param>
-    /// <returns></returns>
-    public Response OrdersCreate(Dictionary<string, object> order, string site = "")
+    public partial class Client
     {
-      if (order.Count < 1)
-      {
-        throw new ArgumentException("Parameter `order` must contains a data");
-      }
+        /// <summary>
+        /// Create order
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public Response OrdersCreate(Dictionary<string, object> order, string site = "")
+        {
+            if (order.Count < 1)
+            {
+                throw new ArgumentException("Parameter `order` must contains a data");
+            }
 
-      return Request.MakeRequest(
-          "/orders/create",
-          Request.MethodPost,
-          FillSite(
-              site,
-              new Dictionary<string, object>
-              {
+            return Request.MakeRequest(
+                "/orders/create",
+                Request.MethodPost,
+                FillSite(
+                    site,
+                    new Dictionary<string, object>
+                    {
                         { "order", Newtonsoft.Json.JsonConvert.SerializeObject(order) }
-              }
-          )
-      );
-    }
+                    }
+                )
+            );
+        }
 
-    public Response OrdersCreate(Order? order, string site = "")
-    {
-      var options = new JsonSerializerOptions
-      {
-        WriteIndented = true,
-        PropertyNameCaseInsensitive = true,
-      };
-      options.Converters.Add(new JsonDateTimeConverter());
-
-      return Request.MakeRequest(
-          "/orders/create",
-          Request.MethodPost,
-          FillSite(
-              site,
-              new Dictionary<string, object>
-              {
+        public Response OrdersCreate(CreateOrderObject order, string site = "")
+        {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                PropertyNameCaseInsensitive = true,
+            };
+            options.Converters.Add(new JsonDateTimeConverter());
+            options.Converters.Add(new JsonStringEnumConverter());
+            return Request.MakeRequest(
+                "/orders/create",
+                Request.MethodPost,
+                FillSite(
+                    site,
+                    new Dictionary<string, object>
+                    {
                         { "order", JsonSerializer.Serialize(order, options) }
-              }
-          )
-      );
-    }
+                    }
+                )
+            );
+        }
 
-    /// <summary>
-    /// Update order
-    /// </summary>
-    /// <param name="order"></param>
-    /// <param name="by"></param>
-    /// <param name="site"></param>
-    /// <returns></returns>
-    public Response OrdersUpdate(Dictionary<string, object> order, string by = "externalId", string site = "")
-    {
-      if (order.Count < 1)
-      {
-        throw new ArgumentException("Parameter `order` must contains a data");
-      }
+        public Response OrdersCreate(Order? order, string site = "")
+        {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                PropertyNameCaseInsensitive = true,
+            };
+            options.Converters.Add(new JsonDateTimeConverter());
+            options.Converters.Add(new JsonStringEnumConverter());
 
-      if (!order.ContainsKey("id") && !order.ContainsKey("externalId"))
-      {
-        throw new ArgumentException("Parameter `order` must contains an id or externalId");
-      }
+            return Request.MakeRequest(
+                "/orders/create",
+                Request.MethodPost,
+                FillSite(
+                    site,
+                    new Dictionary<string, object>
+                    {
+                        { "order", JsonSerializer.Serialize(order, options) }
+                    }
+                )
+            );
+        }
 
-      CheckIdParameter(by);
+        /// <summary>
+        /// Update order
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="by"></param>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public Response OrdersUpdate(Dictionary<string, object> order, string by = "externalId", string site = "")
+        {
+            if (order.Count < 1)
+            {
+                throw new ArgumentException("Parameter `order` must contains a data");
+            }
 
-      string uid = by == "externalId" ? order["externalId"].ToString() : order["id"].ToString();
+            if (!order.ContainsKey("id") && !order.ContainsKey("externalId"))
+            {
+                throw new ArgumentException("Parameter `order` must contains an id or externalId");
+            }
 
-      return Request.MakeRequest(
-          $"/orders/{uid}/edit",
-          Request.MethodPost,
-          FillSite(
-              site,
-              new Dictionary<string, object>
-              {
+            CheckIdParameter(by);
+
+            string uid = by == "externalId" ? order["externalId"].ToString() : order["id"].ToString();
+
+            return Request.MakeRequest(
+                $"/orders/{uid}/edit",
+                Request.MethodPost,
+                FillSite(
+                    site,
+                    new Dictionary<string, object>
+                    {
                         { "by", by },
                         { "order", Newtonsoft.Json.JsonConvert.SerializeObject(order) }
-              }
-          )
-      );
-    }
+                    }
+                )
+            );
+        }
 
-    /// <summary>
-    /// Get order
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="by"></param>
-    /// <param name="site"></param>
-    /// <returns></returns>
-    public Response OrdersGet(string id, string by = "externalId", string site = "")
-    {
-      CheckIdParameter(by);
+        public Response OrderUpdate(Order order, string by = "externalId", string site = "")
+        {
+            if (order == null)
+            {
+                throw new ArgumentException("Parameter `order` must contains a data");
+            }
 
-      return Request.MakeRequest(
-          $"/orders/{id}",
-          Request.MethodGet,
-          FillSite(
-              site,
-              new Dictionary<string, object>
-              {
+            if (order.id == 0 && order.externalId == null)
+            {
+                throw new ArgumentException("Parameter `order` must contains an id or externalId");
+            }
+
+            CheckIdParameter(by);
+
+            string uid = by == "externalId" ? order.externalId.ToString() : order.id.ToString();
+
+            return Request.MakeRequest(
+                $"/orders/{uid}/edit",
+                Request.MethodPost,
+                FillSite(
+                    site,
+                    new Dictionary<string, object>
+                    {
+                        { "by", by },
+                        { "order", Newtonsoft.Json.JsonConvert.SerializeObject(order) }
+                    }
+                )
+            );
+        }
+
+        public Response OrderUpdate(JToken order, string by = "externalId", string site = "")
+        {
+            if (order == null)
+            {
+                throw new ArgumentException("Parameter `order` must contains a data");
+            }
+
+            if ((order as dynamic).id == 0 && (order as dynamic).externalId == null)
+            {
+                throw new ArgumentException("Parameter `order` must contains an id or externalId");
+            }
+
+            CheckIdParameter(by);
+
+            string uid = by == "externalId" ? (order as dynamic).externalId.ToString() : (order as dynamic).id.ToString();
+
+
+            return Request.MakeRequest(
+                $"/orders/{uid}/edit",
+                Request.MethodPost,
+                FillSite(
+                    site,
+                    new Dictionary<string, object>
+                    {
+                        { "by", by },
+                        { "order", Newtonsoft.Json.JsonConvert.SerializeObject(order) }
+                    }
+                )
+            );
+        }
+
+        /// <summary>
+        /// Get order
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="by"></param>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public Response OrdersGet(string id, string by = "externalId", string site = "")
+        {
+            CheckIdParameter(by);
+
+            return Request.MakeRequest(
+                $"/orders/{id}",
+                Request.MethodGet,
+                FillSite(
+                    site,
+                    new Dictionary<string, object>
+                    {
                         { "by", by }
-              }
-          )
-      );
-    }
+                    }
+                )
+            );
+        }
 
 
 
 
-    //public Response CreateInvoice()
-    //{
+        //public Response CreateInvoice()
+        //{
 
-    //}
+        //}
 
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="filter"></param>
-    /// <param name="page"></param>
-    /// <param name="limit"></param>
-    /// <returns></returns>
-    public Response OrdersList(Dictionary<string, object> filter = null, int page = 1, int limit = 20)
-    {
-      Dictionary<string, object> parameters = new Dictionary<string, object>();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="page"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public Response OrdersList(Dictionary<string, object> filter = null, int page = 1, int limit = 20)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
 
-      if (filter != null && filter.Count > 0)
-      {
-        parameters.Add("filter", filter);
-      }
+            if (filter != null && filter.Count > 0)
+            {
+                parameters.Add("filter", filter);
+            }
 
-      if (page > 1)
-      {
-        parameters.Add("page", page);
-      }
+            if (page > 1)
+            {
+                parameters.Add("page", page);
+            }
 
-      if (limit > 20)
-      {
-        parameters.Add("limit", limit);
-      }
+            if (limit > 20)
+            {
+                parameters.Add("limit", limit);
+            }
 
-      return Request.MakeRequest("/orders", Request.MethodGet, parameters);
-    }
+            return Request.MakeRequest("/orders", Request.MethodGet, parameters);
+        }
 
-    /// <summary>
-    /// Fix external ids
-    /// </summary>
-    /// <param name="ids"></param>
-    /// <returns></returns>
-    public Response OrdersFixExternalIds(Dictionary<string, object>[] ids)
-    {
-      return Request.MakeRequest(
-          "/orders/fix-external-ids",
-          Request.MethodPost,
-          new Dictionary<string, object>
-          {
+        /// <summary>
+        /// Fix external ids
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public Response OrdersFixExternalIds(Dictionary<string, object>[] ids)
+        {
+            return Request.MakeRequest(
+                "/orders/fix-external-ids",
+                Request.MethodPost,
+                new Dictionary<string, object>
+                {
                     { "orders", Newtonsoft.Json.JsonConvert.SerializeObject(ids) }
-          }
-      );
-    }
+                }
+            );
+        }
 
-    /// <summary>
-    /// Get orders history
-    /// </summary>
-    /// <param name="startDate"></param>
-    /// <param name="endDate"></param>
-    /// <param name="limit"></param>
-    /// <param name="offset"></param>
-    /// <param name="skipMyChanges"></param>
-    /// <returns></returns>
-    public Response OrdersHistory(DateTime? startDate = null, DateTime? endDate = null, int limit = 200, int offset = 0, bool skipMyChanges = true)
-    {
-      Dictionary<string, object> parameters = new Dictionary<string, object>();
+        /// <summary>
+        /// Get orders history
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="limit"></param>
+        /// <param name="offset"></param>
+        /// <param name="skipMyChanges"></param>
+        /// <returns></returns>
+        public Response OrdersHistory(DateTime? startDate = null, DateTime? endDate = null, int limit = 200, int offset = 0, bool skipMyChanges = true)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
 
-      if (startDate != null)
-      {
-        parameters.Add("startDate", startDate.Value.ToString("yyyy-MM-dd HH:mm:ss"));
-      }
+            if (startDate != null)
+            {
+                parameters.Add("startDate", startDate.Value.ToString("yyyy-MM-dd HH:mm:ss"));
+            }
 
-      if (endDate != null)
-      {
-        parameters.Add("endDate", endDate.Value.ToString("yyyy-MM-dd HH:mm:ss"));
-      }
+            if (endDate != null)
+            {
+                parameters.Add("endDate", endDate.Value.ToString("yyyy-MM-dd HH:mm:ss"));
+            }
 
-      if (limit > 0)
-      {
-        parameters.Add("limit", limit);
-      }
+            if (limit > 0)
+            {
+                parameters.Add("limit", limit);
+            }
 
-      if (offset > 0)
-      {
-        parameters.Add("offset", offset);
-      }
+            if (offset > 0)
+            {
+                parameters.Add("offset", offset);
+            }
 
-      parameters.Add("skipMyChanges", skipMyChanges);
+            parameters.Add("skipMyChanges", skipMyChanges);
 
-      return Request.MakeRequest(
-          "/orders/history",
-          Request.MethodGet,
-          parameters
-      );
-    }
+            return Request.MakeRequest(
+                "/orders/history",
+                Request.MethodGet,
+                parameters
+            );
+        }
 
-    /// <summary>
-    /// Get orders statuses
-    /// </summary>
-    /// <param name="ids"></param>
-    /// <param name="externalIds"></param>
-    /// <returns></returns>
-    public Response OrdersStatuses(List<string> ids, List<string> externalIds = null)
-    {
-      Dictionary<string, object> parameters = new Dictionary<string, object>();
+        /// <summary>
+        /// Get orders statuses
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <param name="externalIds"></param>
+        /// <returns></returns>
+        public Response OrdersStatuses(List<string> ids, List<string> externalIds = null)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
 
-      if (ids == null && externalIds == null)
-      {
-        throw new ArgumentException("You must set the array of `ids` or `externalIds`.");
-      }
+            if (ids == null && externalIds == null)
+            {
+                throw new ArgumentException("You must set the array of `ids` or `externalIds`.");
+            }
 
-      if (
-          ids != null && externalIds != null && ids.Count + externalIds.Count > 500 ||
-          ids == null && externalIds != null && externalIds.Count > 500 ||
-          ids != null && externalIds == null && ids.Count > 500
-      )
-      {
-        throw new ArgumentException("Too many ids or externalIds. Maximum number of elements is 500");
-      }
+            if (
+                ids != null && externalIds != null && ids.Count + externalIds.Count > 500 ||
+                ids == null && externalIds != null && externalIds.Count > 500 ||
+                ids != null && externalIds == null && ids.Count > 500
+            )
+            {
+                throw new ArgumentException("Too many ids or externalIds. Maximum number of elements is 500");
+            }
 
-      if (ids != null && ids.Count > 0)
-      {
-        parameters.Add("ids", ids);
-      }
+            if (ids != null && ids.Count > 0)
+            {
+                parameters.Add("ids", ids);
+            }
 
-      if (externalIds != null && externalIds.Count > 0)
-      {
-        parameters.Add("externalIds", externalIds);
-      }
+            if (externalIds != null && externalIds.Count > 0)
+            {
+                parameters.Add("externalIds", externalIds);
+            }
 
-      return Request.MakeRequest(
-          "/orders/statuses",
-          Request.MethodGet,
-          parameters
-      );
-    }
+            return Request.MakeRequest(
+                "/orders/statuses",
+                Request.MethodGet,
+                parameters
+            );
+        }
 
-    /// <summary>
-    /// Orders upload
-    /// </summary>
-    /// <param name="orders"></param>
-    /// <param name="site"></param>
-    /// <returns></returns>
-    public Response OrdersUpload(List<object> orders, string site = "")
-    {
-      if (orders.Count < 1)
-      {
-        throw new ArgumentException("Parameter `orders` must contains a data");
-      }
+        /// <summary>
+        /// Orders upload
+        /// </summary>
+        /// <param name="orders"></param>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public Response OrdersUpload(List<object> orders, string site = "")
+        {
+            if (orders.Count < 1)
+            {
+                throw new ArgumentException("Parameter `orders` must contains a data");
+            }
 
-      if (orders.Count > 50)
-      {
-        throw new ArgumentException("Parameter `orders` must contain 50 or less records");
-      }
+            if (orders.Count > 50)
+            {
+                throw new ArgumentException("Parameter `orders` must contain 50 or less records");
+            }
 
-      return Request.MakeRequest(
-          "/orders/upload",
-          Request.MethodPost,
-          FillSite(
-              site,
-              new Dictionary<string, object>
-              {
+            return Request.MakeRequest(
+                "/orders/upload",
+                Request.MethodPost,
+                FillSite(
+                    site,
+                    new Dictionary<string, object>
+                    {
                         { "orders", Newtonsoft.Json.JsonConvert.SerializeObject(orders) }
-              }
-          )
-      );
+                    }
+                )
+            );
+        }
     }
-  }
 }

@@ -187,7 +187,9 @@ namespace RetailCRMCore.Models
     public int weight { get; set; }
 
     public string[] images { get; set; }
-
+    public int width { get; set; }
+    public int length { get; set; }
+    public int height { get; set; }
   }
 
   public enum Model
