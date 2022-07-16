@@ -124,7 +124,7 @@ namespace RetailCRMCore.Models
     /// <summary>
     /// Товар, к которому относится SKU
     /// </summary>
-    public Product product { get; set; }
+    public Product? product { get; set; }
 
     /// <summary>
     /// Доступное количество

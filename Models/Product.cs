@@ -107,6 +107,7 @@ namespace RetailCRMCore.Models
         public string sostav { get; set; }
 
         public string model { get; set; }
+        public string texturePath { get; set; }
     }
 
     public class Image
@@ -119,10 +120,10 @@ namespace RetailCRMCore.Models
 
     public enum ImageSide
     {
-        front = 1,
-        left = 2,
-        rear = 3,
-        right = 4,
+        front = 2,
+        left = 1,
+        rear = 4,
+        right = 3,
         @case = 5,
         unknown = 0
     }
