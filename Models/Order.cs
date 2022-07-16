@@ -55,7 +55,7 @@ namespace RetailCRMCore.Models
         /// <summary>
         /// Менеджер заказа
         /// </summary>
-        public User manager { get; set; }
+        public User? manager { get; set; }
 
         public int managerId { get; set; }
         /// <summary>
@@ -145,7 +145,7 @@ namespace RetailCRMCore.Models
         /// <summary>
         /// Тип доставки
         /// </summary>
-        public DeliveryType? deliveryType { get; set; }
+        //public DeliveryType deliveryType { get; set; } = new DeliveryType();
         /// <summary>
         /// Служба доставки
         /// </summary>
@@ -319,7 +319,7 @@ namespace RetailCRMCore.Models
         /// </summary>
 
         //TODO : не сериализуется сука...
-        public object? payments { get; set; }
+        public dynamic payments { get; set; }
 
         /// <summary>
         /// Данные интеграционной доставки

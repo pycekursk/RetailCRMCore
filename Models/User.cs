@@ -18,7 +18,7 @@
     /// <summary>
     /// Email пользователя
     /// </summary>
-    public string email { get; set; }
+    public string emailAddress { get; set; }
 
     /// <summary>
     /// Имя

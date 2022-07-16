@@ -136,22 +136,16 @@ namespace RetailCRMCore.Versions.V3
 
             string uid = by == "externalId" ? order.externalId.ToString() : order.id.ToString();
 
-
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(order);
-            var data = new Dictionary<string, object>
-                    {
-                        { "by", by },
-                        { "order", json }
-                    };
-
-            Console.WriteLine(json);
-
             return Request.MakeRequest(
                 $"/orders/{uid}/edit",
                 Request.MethodPost,
                 FillSite(
                     site,
-                    data
+                    new Dictionary<string, object>
+                    {
+                        { "by", by },
+                        { "order", Newtonsoft.Json.JsonConvert.SerializeObject(order) }
+                    }
                 )
             );
         }

@@ -25,47 +25,21 @@ namespace RetailCRMCore.Models
         [JsonProperty("locked")]
         public bool locked { get; set; } = true;
 
+        [JsonProperty("cost")]
+        public double cost { get; set; }
+
         [JsonProperty("payerType")]
-        public string? payerType { get; set; }
+        public string payerType { get; set; }
 
         [JsonProperty("tariff")]
-        public string? tariff { get; set; }
-
-        [JsonProperty("tariffName")]
-        public string? tariffName { get; set; }
+        public string tariff { get; set; }
 
         //[JsonIgnore]
         [JsonProperty("extraData")]
         public DeliveryExtraData extraData { get; set; }
 
         [JsonProperty("pickuppointId")]
-        public string? pickuppointId { get; set; }
-
-        [JsonProperty("pickuppointAddress")]
-        public string? pickuppointAddress { get; set; }
-
-        [JsonProperty("days")]
-        public string? days { get; set; }
-
-        [JsonProperty("pickuppointSchedule")]
-        public string? pickuppointSchedule { get; set; }
-
-        [JsonProperty("pickuppointPhone")]
-        public string? pickuppointPhone { get; set; }
-
-
-        [JsonProperty("pickuppointName")]
-        public string? pickuppointName { get; set; }
-
-        [JsonProperty("pickuppointCoordinateLatitude")]
-        public string? pickuppointCoordinateLatitude { get; set; }
-
-        [JsonProperty("pickuppointCoordinateLongitude")]
-        public string? pickuppointCoordinateLongitude { get; set; }
-
-
-        [JsonProperty("cost")]
-        public double cost { get; set; }
+        public string pickuppointId { get; set; }
     }
 
     public class DeliveryExtraData

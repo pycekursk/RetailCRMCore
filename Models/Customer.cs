@@ -92,7 +92,7 @@
     /// <summary>
     /// Клиенты MessageGateway
     /// </summary>
-    public MGCustomer[] mgCustomers { get; set; }
+    public MGCustomer mgCustomers { get; set; }
 
     /// <summary>
     /// Адрес клиента
