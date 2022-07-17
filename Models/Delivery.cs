@@ -12,7 +12,7 @@ namespace RetailCRMCore.Models
         public double netCost { get; set; }
         public string date { get; set; }
         public string vatRate { get; set; }
-        public Address address { get; set; }
+        public Address? address { get; set; }
         public TimeInterval time { get; set; }
         public DeliveryService service { get; set; }
         [JsonProperty("data")]

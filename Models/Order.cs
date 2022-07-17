@@ -125,7 +125,7 @@ namespace RetailCRMCore.Models
         /// <summary>
         /// Сумма по товарам. Если вызвать с параметром getSumm(false), то в сумму также включается стоимость отмененных товаров
         /// </summary>
-        public double summ { get; set; }
+        public double totalSumm { get; set; }
         /// <summary>
         /// Общая стоимость закупки
         /// </summary>
