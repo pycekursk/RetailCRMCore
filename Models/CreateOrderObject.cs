@@ -25,5 +25,8 @@ namespace RetailCRMCore.Models
         public int managerId { get; set; }
         public Customer? customer { get; set; }
         public Delivery? delivery { get; set; }
+
+        public double? discountManualAmount { get; set; }
+        public double? discountManualPercent { get; set; }
     }
 }
