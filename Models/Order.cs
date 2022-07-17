@@ -269,7 +269,7 @@ namespace RetailCRMCore.Models
         /// <summary>
         /// Общая сумма с учетом скидки
         /// </summary>
-        public double totalSumm { get; set; }
+        public double summ { get; set; }
         /// <summary>
         /// Оплаченная сумма
         /// </summary>
