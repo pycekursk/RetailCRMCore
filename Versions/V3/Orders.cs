@@ -44,9 +44,14 @@ namespace RetailCRMCore.Versions.V3
             {
                 WriteIndented = true,
                 PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
             options.Converters.Add(new JsonDateTimeConverter());
             options.Converters.Add(new JsonStringEnumConverter());
+
+            string dataJson = JsonSerializer.Serialize(order, options);
+            Console.WriteLine(dataJson);
+
             return Request.MakeRequest(
                 "/orders/create",
                 Request.MethodPost,
@@ -54,7 +59,7 @@ namespace RetailCRMCore.Versions.V3
                     site,
                     new Dictionary<string, object>
                     {
-                        { "order", JsonSerializer.Serialize(order, options) }
+                        { "order",  dataJson}
                     }
                 )
             );

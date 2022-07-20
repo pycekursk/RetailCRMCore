@@ -16,7 +16,7 @@ namespace RetailCRMCore.Models
         public string email { get; set; }
         public string phone { get; set; }
         public List<OrderProduct> items { get; set; } = new List<OrderProduct>();
-        public Address address { get; set; }
+        public Address deliveryAddress { get; set; }
         public string deliveryType { get; set; }
         public string paymentType { get; set; }
         public string comment { get; set; }
@@ -24,6 +24,7 @@ namespace RetailCRMCore.Models
         public string patronymic { get; set; }
         public int managerId { get; set; }
         public Customer? customer { get; set; }
+
         public Delivery? delivery { get; set; }
 
         public double? discountManualAmount { get; set; }
