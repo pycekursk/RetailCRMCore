@@ -24,7 +24,7 @@ namespace RetailCRMCore.Models
         public string patronymic { get; set; }
         public int managerId { get; set; }
         public Customer? customer { get; set; }
-
+        public Dictionary<string, string>? customFields { get; set; }
         public Delivery? delivery { get; set; }
 
         public double? discountManualAmount { get; set; }
